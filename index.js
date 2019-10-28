@@ -1,11 +1,5 @@
-const Koa = require('koa')
-const app = new Koa()
+require('babel-register') ({
+    presets: [ 'env' ]
+})
 
-app.use(async (ctx) => {
- ctx.body = 'hello koa2'
-} )
-
-
-app.listen(3000)
-
-console.log('300')
+module.exports = require('./app.js')
