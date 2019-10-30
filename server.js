@@ -1,6 +1,5 @@
 const Koa = require('koa')
 const path = require('path')
-const chalk = require('chalk')
 
 const app = module.exports = new Koa()
 
