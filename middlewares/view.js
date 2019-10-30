@@ -6,7 +6,7 @@ const { createBundleRenderer } = require('vue-server-renderer')
 
 const resolve = file => path.resolve(__dirname, file)
 const isProd = process.env.NODE_ENV === 'production'
-const templatePath = resolve('../views/index.html')
+const templatePath = resolve('../views/index.template.html')
 
 function createRenderer (bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
@@ -48,13 +48,13 @@ module.exports = class ViewMiddleware {
     }
 
     return async function (ctx) {
-      const context = {
-        url: ctx.url,
+       const context = {
+        url: ctx.url
       }
 
       try {
         ctx.set('Content-Type', 'text/html')
-        ctx.body = await getHTML(context)
+        ctx.body = await getHTML()
       } catch (error) {
         if (error.code === 401) {
           ctx.status = 302

@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+Vue.use(ElementUI);
 
 // 导出一个工厂函数，用于创建新的
 // 应用程序、router 和 store 实例

@@ -17,5 +17,8 @@ module.exports = {
   },
   "plugins": [
     "vue"
-  ]
+  ],
+  "rules": {
+     "vue/singleline-html-element-content-newline": 0
+  }
 };

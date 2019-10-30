@@ -13,7 +13,7 @@ module.exports = {
   devtool: prod ? false : 'cheap-module-eval-source-map',
   output: {
     path: resolve('../dist'),
-    publicPath: './',
+    publicPath: '/dist/',
     filename: '[name].[chunkhash].js'
   },
   resolve: {
@@ -69,11 +69,16 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: "style-loader" },
+          { loader: "vue-style-loader" },
           { loader: "css-loader" }
         ]
       }
     ]
   },
-  plugins: [new FriendlyErrorsPlugin({clearConsole: true}), new VueLoaderPlugin()]
+  plugins: [new FriendlyErrorsPlugin(), new VueLoaderPlugin()],
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+}
 }
