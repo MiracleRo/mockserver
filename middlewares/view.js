@@ -25,6 +25,7 @@ function createRenderer (bundle, options) {
 module.exports = class ViewMiddleware {
   static render (app) {
     let renderer, readyPromise
+
     if (isProd) {
       const template = fs.readFileSync(templatePath, 'utf-8')
       const bundle = require('../dist/vue-ssr-server-bundle.json')
@@ -37,12 +38,14 @@ module.exports = class ViewMiddleware {
     }
 
     function getHTML (context) {
+      console.log(context)
       return new Promise((resolve, reject) => {
         const cb = (error, html) => {
           if (error) return reject(error)
           resolve(html)
         }
         if (isProd) return renderer.renderToString(context, cb)
+
         readyPromise.then(() => renderer.renderToString(context, cb))
       })
     }
