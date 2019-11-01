@@ -75,7 +75,7 @@ module.exports = {
       }
     ]
   },
-  plugins: [new FriendlyErrorsPlugin(), new VueLoaderPlugin()],
+  plugins: [new FriendlyErrorsPlugin({ log: false}), new VueLoaderPlugin()],
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
