@@ -11,12 +11,13 @@ const templatePath = resolve('../views/index.template.html')
 function createRenderer (bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
   return createBundleRenderer(bundle, Object.assign(options, {
+    // for component caching
     cache: LRU({
       max: 1000,
       maxAge: 1000 * 60 * 15
     }),
     // this is only needed when vue-server-renderer is npm-linked
-    basedir: resolve('../dist'),
+    basedir: resolve('./dist'),
     // recommended for performance
     runInNewContext: false
   }))
@@ -38,7 +39,6 @@ module.exports = class ViewMiddleware {
     }
 
     function getHTML (context) {
-      console.log(context)
       return new Promise((resolve, reject) => {
         const cb = (error, html) => {
           if (error) return reject(error)
@@ -57,7 +57,8 @@ module.exports = class ViewMiddleware {
 
       try {
         ctx.set('Content-Type', 'text/html')
-        ctx.body = await getHTML()
+        console.log(context)
+        ctx.body = await getHTML(context)
       } catch (error) {
         if (error.code === 401) {
           ctx.status = 302

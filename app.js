@@ -2,10 +2,13 @@ const Koa = require('koa')
 const path = require('path')
 const chalk = require('chalk')
 const staticCache = require('koa-static-cache')
+const favicon = require('koa-favicon')
+
 const app = module.exports = new Koa()
 
 app.use(serve('/dist', './dist'))
-app.use(require('./middlewares/view').render(app))
+   .use(favicon(path.join(__dirname, '/public/images/logo.png')))
+   .use(require('./middlewares/view').render(app))
 
 app.listen(9000, () => {
   console.log(
