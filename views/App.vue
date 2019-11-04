@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-    <el-button type="primary" @click="goPage">主要按钮</el-button>
+    <div class="view">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -13,9 +13,18 @@ export default {
     }
   },
   methods: {
-  	goPage () {
-  		this.$router.push({path: '/update'})
-  	}
+    goPage() {
+      this.$router.push({ path: '/update' })
+    }
   }
 }
 </script>
+
+<style lang="less">
+#app {
+  .view {
+    width: 70%;
+    margin: 100px auto 0;
+  }
+}
+</style>

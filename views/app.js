@@ -4,6 +4,7 @@ import { createStore } from './store'
 import { createRouter } from './router'
 import { sync } from 'vuex-router-sync'
 import ElementUI from 'element-ui';
+import 'normalize.css'
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
