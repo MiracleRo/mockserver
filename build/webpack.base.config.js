@@ -2,6 +2,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
@@ -68,7 +69,18 @@ module.exports = {
       },
       {
         test: /\.(le|c)ss$/,
-        use: [
+        use: prod ? 
+        ExtractTextPlugin.extract({
+          use: [
+                {
+                  loader: 'css-loader',
+                  options: { minimize: true }
+                },
+                'stylus-loader'
+              ],
+              fallback: 'vue-style-loader'
+        })
+        : [
           { loader: "vue-style-loader" },
           { loader: "css-loader" },
           {
@@ -82,7 +94,15 @@ module.exports = {
       }
     ]
   },
-  plugins: [new FriendlyErrorsPlugin({ log: false }), new VueLoaderPlugin()],
+  plugins: prod ? 
+    [ new VueLoaderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+          compress: { warnings: false }
+        }),
+        new ExtractTextPlugin({
+          filename: 'common.[chunkhash].css'
+        }) ]:
+    [new FriendlyErrorsPlugin({ log: false }), new VueLoaderPlugin()],
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
