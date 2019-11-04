@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <el-button type="primary">主要按钮</el-button>
+    <router-view></router-view>
+    <el-button type="primary" @click="goPage">主要按钮</el-button>
   </div>
 </template>
 
@@ -10,6 +11,11 @@ export default {
     return {
       message: 'hello vue'
     }
+  },
+  methods: {
+  	goPage () {
+  		this.$router.push({path: '/update'})
+  	}
   }
 }
 </script>

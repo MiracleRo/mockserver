@@ -7,11 +7,12 @@ export function createRouter () {
   return new Router({
     mode: 'history',
     base: __dirname,
+    fallback: false,
+    scrollBehavior: () => ({ y: 0 }),
     routes: [
-      { path: '/list', component: () => import('../components/InterfaceList.vue') },
+      { path: '/', component: () => import('../components/InterfaceList.vue') },
       { path: '/update', component: () => import('../components/InterfaceUpdate.vue') },
-      { path: '/view', component: () => import('../components/InterfaceView.vue') },
-       { path: '/', redirect: '/list' }
+      { path: '/view', component: () => import('../components/InterfaceView.vue') }
     ]
   })
 }

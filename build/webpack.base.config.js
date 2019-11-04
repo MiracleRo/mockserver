@@ -67,18 +67,25 @@ module.exports = {
         loader: 'url-loader'
       },
       {
-        test: /\.css$/,
+        test: /\.(le|c)ss$/,
         use: [
           { loader: "vue-style-loader" },
-          { loader: "css-loader" }
+          { loader: "css-loader" },
+          {
+            loader: 'less-loader',
+            options: {
+              strictMath: true,
+              noIeCompat: true
+            }
+          }
         ]
       }
     ]
   },
-  plugins: [new FriendlyErrorsPlugin({ log: false}), new VueLoaderPlugin()],
+  plugins: [new FriendlyErrorsPlugin({ log: false }), new VueLoaderPlugin()],
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
     maxAssetSize: 512000
-}
+  }
 }
