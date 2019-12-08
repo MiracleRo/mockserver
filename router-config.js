@@ -12,5 +12,5 @@ exports.mock = mockRouter
   .get('/apiList', mock.mock)
 
 exports.api = apiRouter
-  .get('/apiList', api.mock)
+  .get('/list', api.list)
 

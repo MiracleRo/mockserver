@@ -1,7 +1,7 @@
 const Mock = require('mockjs')
 
-class user {
-  mock(ctx) {
+class Api {
+  list(ctx) {
     const data = Mock.mock({
       'list|20': [{
         'id|+1': 1,
@@ -12,4 +12,4 @@ class user {
   }
 }
 
-module.exports = new user()
+module.exports = new Api()
