@@ -7,8 +7,27 @@
   </div>
 </template>
 <script type="text/javascript">
+import {Api} from '../util/axois/index'
+
 export default {
+  data() {
+    return {
+      apiList: []
+    }
+  },
+  created() {
+    this.getApiList()
+  },
   methods: {
+    async getApiList() {
+      try {
+        const apiList = await Api.list()
+        this.apiList = [...apiList.list]
+        console.log(this.apiList)
+      } catch (e) {
+        console.log(e)
+      }
+    },
     goToUpdate() {
       this.$router.push('update')
     },
