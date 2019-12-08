@@ -4,18 +4,25 @@ const chalk = require('chalk')
 const staticCache = require('koa-static-cache')
 const favicon = require('koa-favicon')
 const mongo = require('./db/db')
+const routerConfig = require('./router-config')
 
 const app = module.exports = new Koa()
 
 app.use(serve('/dist', './dist'))
    .use(favicon(path.join(__dirname, '/public/images/logo.png')))
-   .use(require('./middlewares/view').render(app))
+   .use(routerConfig.mock.routes())
+   .use(routerConfig.mock.allowedMethods())
+   .use(routerConfig.api.routes())
+   .use(routerConfig.api.allowedMethods())
 
-app.listen(9000, () => {
-  console.log(
-    chalk.green(`成功监听端口：9000`)
-  )
-})
+
+if (!module.parent) {
+  app.use(require('./middlewares/view').render(app))
+  app.listen('9999', () => {
+    console.log(chalk.green(`server started at http://localhost:9999`))
+  })
+}
+
 
 function serve (prefix, filePath) {
   return staticCache(path.resolve(__dirname, filePath), {
