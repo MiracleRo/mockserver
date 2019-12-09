@@ -1,28 +1,21 @@
-const mongoose = require('mongoose')
+// const config = require('../config/config')
 const chalk = require('chalk')
-const config = require('../config/config')
+const { Sequelize } = require('sequelize');
 
-mongoose.connect(config.url, { useNewUrlParser: true,  useUnifiedTopology: true })
 
-const db = mongoose.connection
-
-db.once('open', () => {
-  console.log(
-    chalk.green('链接数据库成功'))
-})
-
-db.on('error', (err) => {
-  console.error(
-    chalk.red('Error in MongoDb connection: ' + error)
-  )
-  mongoose.disconnect();
-})
-
-db.on('close', function() {
-    console.log(
-      chalk.red('数据库断开，重新连接数据库')
-    );
-    mongoose.connect(config.url, {server:{auto_reconnect:true}});
+const sequelize = new Sequelize('mock_api', 'root', 'qwerty!@#', {
+  host: 'localhost',
+  dialect: 'mysql'
 });
 
-module.export = db;
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log(chalk.green(`连接数据库成功!`))
+  })
+  .catch(err => {
+    console.log(chalk.red(`连接数据库失败: ${err}`))
+  });
+
+module.exports = sequelize

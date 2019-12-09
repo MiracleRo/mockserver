@@ -23,7 +23,6 @@ export default {
       try {
         const apiList = await Api.list()
         this.apiList = [...apiList.list]
-        console.log(this.apiList)
       } catch (e) {
         console.log(e)
       }
