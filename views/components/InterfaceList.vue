@@ -12,7 +12,9 @@ import {Api} from '../util/axois/index'
 export default {
   data() {
     return {
-      apiList: []
+      apiList: [],
+      pageSize: 10,
+      pageNum: 1
     }
   },
   created() {
@@ -21,7 +23,7 @@ export default {
   methods: {
     async getApiList() {
       try {
-        const apiList = await Api.list()
+        const apiList = await Api.list({params:{pageSize: this.pageSize,pageNum:this.pageNum}})
         this.apiList = [...apiList.list]
       } catch (e) {
         console.log(e)

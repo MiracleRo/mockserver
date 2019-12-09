@@ -3,7 +3,7 @@ const path = require('path')
 const chalk = require('chalk')
 const staticCache = require('koa-static-cache')
 const favicon = require('koa-favicon')
-const mongo = require('./db/db')
+
 const routerConfig = require('./router-config')
 
 const app = module.exports = new Koa()

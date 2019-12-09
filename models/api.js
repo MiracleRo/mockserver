@@ -50,8 +50,6 @@ const api = db.define('t_user'/*自定义表名*/, {
    ]
 });
 //先删除后同步
-api.sync().then(function(result){
-  console.log(result)
-})
+api.sync()
 
 module.exports =  api;

@@ -43,8 +43,6 @@ const Api = {
   list: config => createAPI('/list', 'get', config)
 }
 
-
-
 export {
   Api
 }
