@@ -1,7 +1,5 @@
-// const config = require('../config/config')
-const chalk = require('chalk')
 const { Sequelize } = require('sequelize');
-
+const chalk = require('chalk')
 
 const sequelize = new Sequelize('mock_api', 'root', 'qwerty!@#', {
   host: 'localhost',
