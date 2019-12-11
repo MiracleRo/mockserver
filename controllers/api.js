@@ -2,36 +2,33 @@ const Mock = require('mockjs')
 const ApiModel = require("../models/api")
 class Api {
   async list(ctx) {
-    console.log(ctx.method.toUpperCase() === 'GET')
-
     if (ctx.method.toUpperCase() === 'GET') {
       try {
-        let data = await ApiModel.findAll({
-          limit:10,//每页10条
-          offset:0*10,//第x页*每页个数
+        let {pageSize, pageNum} = ctx.query
+        pageSize = Number(pageSize)
+        pageNum = Number(pageNum)
+        const res = await ApiModel.findAndCountAll({
+          limit: pageSize,//每页10条
+          offset:(pageNum -1) * pageSize,//第x页*每页个数
           where:{}
         })
-        console.log(data)
+        const count = res.count
+        const list = res.rows.map(item => ({
+          id: item.id,
+          url: item.url,
+          method: item.method,
+          desc: item.desc,
+          rules: JSON.parse(item.rules)
+        }))
         ctx.body = {
-          code: 200,
-          data: data,
-          message: "success"
+          total: count,
+          list: list
         }
       } catch (e) {
-        console.log(e)
+        throw new Error(e)
       }
     } else {
-      ctx.body = {
-        code
-      }
     }
-    
-    // const data = Mock.mock({
-    //   'list|20': [{
-    //     'id|+1': 1,
-    //     'name': Mock.Random.string()
-    //   }]
-    // })
     
   }
 }
