@@ -10,10 +10,9 @@ const app = module.exports = new Koa()
 
 app.use(serve('/dist', './dist'))
    .use(favicon(path.join(__dirname, '/public/images/logo.png')))
-   .use(routerConfig.mock.routes())
-   .use(routerConfig.mock.allowedMethods())
    .use(routerConfig.api.routes())
    .use(routerConfig.api.allowedMethods())
+
 if (!module.parent) {
   app.use(require('./middlewares/view').render(app))
   app.listen('9999', () => {

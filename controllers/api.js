@@ -28,6 +28,7 @@ class Api {
         throw new Error(e)
       }
     } else {
+      ctx.throw(405,'msg')
     }
     
   }

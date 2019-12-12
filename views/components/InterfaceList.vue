@@ -5,7 +5,7 @@
       <el-button type="primary" icon="el-icon-download" @click="downApi">下载</el-button>
     </div>
     <div class="table-wrapper">
-      <el-table v-loading="loading"  :data="apiList" style="width: 100%">
+      <el-table v-loading="loading" :data="apiList" style="width: 100%">
         <el-table-column prop="url" label="请求路径"></el-table-column>
         <el-table-column prop="method" label="请求方法"></el-table-column>
         <el-table-column prop="desc" label="描述"></el-table-column>
