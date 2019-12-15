@@ -50,9 +50,7 @@ class Api {
           rule,
           method
         })
-        ctx.body = {
-          message: '插入成功!'
-        }
+        ctx.body = ctx.util.success()
       } catch(e) {
         ctx.body = {
           message: '插入失败'

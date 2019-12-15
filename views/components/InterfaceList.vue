@@ -56,8 +56,8 @@ export default {
       this.pageNum = num;
       this.getApiList()
     },
-    goToUpdate() {
-      this.$router.push('update')
+    goToUpdate(payload) {
+      payload.id ? this.$router.push(`update/${payload.id}`) : this.$router.push(`create`)
     },
     downApi() {
       console.log(111111)

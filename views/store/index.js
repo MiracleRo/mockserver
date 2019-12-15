@@ -8,7 +8,9 @@ Vue.use(Vuex)
 
 export function createStore () {
   return new Vuex.Store({
-    state: {},
+    state: {
+      api: null
+    },
     actions,
     mutations,
     getters

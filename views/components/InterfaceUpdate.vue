@@ -73,6 +73,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$route.params.id)
     this.codeEditor = ace.edit(this.$refs.codeEditor)
     this.codeEditor.getSession().setMode('ace/mode/javascript')
     this.codeEditor.setTheme('ace/theme/monokai')
@@ -90,7 +91,6 @@ export default {
         this.submit()
       }
     })
-
     if (this.isEdit) {
       this.autoClose = true
       this.temp.url = this.mockData.url.slice(1) // remove /
@@ -98,7 +98,6 @@ export default {
       this.temp.method = this.mockData.method
       this.temp.description = this.mockData.description
     }
-
     this.$nextTick(() => {
       this.codeEditor.setValue(this.temp.rule)
       this.format()

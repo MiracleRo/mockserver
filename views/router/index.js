@@ -11,7 +11,8 @@ export function createRouter () {
     scrollBehavior: () => ({ y: 0 }),
     routes: [
       { path: '/', component: () => import('components/InterfaceList.vue') },
-      { path: '/update', component: () => import('components/InterfaceUpdate.vue') },
+      { path: '/update/:id', component: () => import('components/InterfaceUpdate.vue') },
+      { path: '/create', component: () => import('components/InterfaceUpdate.vue') },
       { path: '/view', component: () => import('components/InterfaceView.vue') }
     ]
   })
