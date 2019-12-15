@@ -20,6 +20,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
+      'util': resolve('../view/util'),
       'pages': resolve('../views/pages'),
       'components': resolve('../views/components'),
       'config': resolve('../views/config.json')
@@ -91,6 +92,10 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.snippets/,
+        loader: 'raw-loader'
       }
     ]
   },

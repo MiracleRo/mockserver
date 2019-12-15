@@ -16,6 +16,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "brace": "^0.11.0",
+    "js-beautify": "^1.7.5",
     "@babel/runtime": "^7.7.6",
     "axios": "^0.19.0",
     "babel-eslint": "^10.0.3",
@@ -47,6 +49,7 @@
     "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
+    "raw-loader": "^0.5.1",
     "@babel/core": "^7.6.4",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.6.2",
