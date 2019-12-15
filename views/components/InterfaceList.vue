@@ -12,6 +12,7 @@
         <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="goToUpdate(scope.row)">查看</el-button>
+            <el-button type="text" size="small" @click="deleteApi(scope.row)">删除</el-button>
           </template>
         </el-table-column>  
       </el-table>
@@ -48,7 +49,6 @@ export default {
         this.total = apiList.data.total
         this.loading = false;
       } catch (e) {
-        console.log(e)
         this.loading = false;
       }
     },
@@ -58,6 +58,16 @@ export default {
     },
     goToUpdate(payload) {
       payload.id ? this.$router.push(`update/${payload.id}`) : this.$router.push(`create`)
+    },
+    async deleteApi (payload) {
+      const {id} = payload
+      try {
+        await Api.deleteApi({data: {id: parseInt(id)}})
+        this.getApiList()
+        this.$message.success('删除成功!')
+      } catch(e) {
+        console.log(e)
+      }
     },
     downApi() {
       console.log(111111)

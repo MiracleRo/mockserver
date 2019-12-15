@@ -43,7 +43,8 @@ const Api = {
   list: config => createAPI('/list', 'get', config),
   create: config => createAPI('/create', 'post', config),
   detail: config => createAPI('/detail', 'get', config),
-  update: config => createAPI('/update', 'post', config)
+  update: config => createAPI('/update', 'post', config),
+  deleteApi: config => createAPI('/delete', 'post', config),
 }
 
 export {

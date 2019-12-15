@@ -93,6 +93,10 @@ export default {
         this.submit()
       }
     })
+    !this.edit && this.$nextTick(() => {
+      this.codeEditor.setValue(this.temp.rule)
+      this.format()
+    })
   },
   methods: {
     convertUrl (url) {
@@ -153,7 +157,6 @@ export default {
       try {
         const data = await Api.detail({params: {id: this.$route.params.id}})
         const {url, description, method, rule} = data.data.detail
-        console.log(rule)
         this.temp.url = url.slice(1);
         this.temp.description = description;
         this.temp.rule = rule;

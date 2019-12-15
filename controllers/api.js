@@ -17,7 +17,7 @@ class Api {
           url: item.url,
           method: item.method,
           description: item.description,
-          rule: JSON.parse(item.rule)
+          rule: item.rule.replace(/\s/g, '')
         }))
         ctx.body = ctx.util.resuccess({
           total: count,
@@ -86,7 +86,7 @@ class Api {
       const res = await ApiModel.findOne({
         where: {url}
       })
-      if (res.id !== parseInt(id)) {
+      if (res && res.id !== parseInt(id)) {
         ctx.body = ctx.util.refail('请检查接口是否已经存在')
         return
       }
@@ -94,7 +94,7 @@ class Api {
         await ApiModel.update({
           url,
           description,
-          rule,
+          rule: rule.replace(/\s/g, ''),
           method
         },
         {
@@ -102,6 +102,18 @@ class Api {
         })
         ctx.body =ctx.util.resuccess()
       } catch(e) {
+        ctx.body =ctx.util.refail(e)
+      }
+    }
+  }
+  async deleteApi(ctx) {
+    if (ctx.method.toUpperCase() === 'POST') {
+      const {id} = ctx.request.body
+      try {
+        await ApiModel.destroy({where: {id}})
+        ctx.body =ctx.util.resuccess()
+      } catch(e) {
+        console.log(e)
         ctx.body =ctx.util.refail(e)
       }
     }
