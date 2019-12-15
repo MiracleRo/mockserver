@@ -44,8 +44,8 @@ export default {
       try {
         this.loading = true;
         const apiList = await Api.list({params:{pageSize: this.pageSize,pageNum:this.pageNum}})
-        this.apiList = [...apiList.list]
-        this.total = apiList.total
+        this.apiList = [...apiList.data.list]
+        this.total = apiList.data.total
         this.loading = false;
       } catch (e) {
         console.log(e)

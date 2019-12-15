@@ -19,10 +19,10 @@ class Api {
           description: item.description,
           rule: JSON.parse(item.rule)
         }))
-        ctx.body = {
+        ctx.body = ctx.util.resuccess({
           total: count,
           list: list
-        }
+        })
       } catch (e) {
         throw new Error(e)
       }
@@ -31,13 +31,34 @@ class Api {
     }
   }
   async create(ctx) {
-    if (ctx.method.toUpperCase() === 'GET') {
-      const {url, desc, rule, method} = ctx.query
-      ctx.body = {
-        data: "wdnmd"
+    if (ctx.method.toUpperCase() === 'POST') {
+      const {url, description, rule, method} = ctx.request.body
+      const data = await ApiModel.findOne({
+        where: {
+          url,
+          method
+        }
+      })
+      if (data) {
+        ctx.body = ctx.util.refail('请检查接口是否已经存在')
+        return
+      }
+      try {
+        await ApiModel.create({
+          url,
+          description,
+          rule,
+          method
+        })
+        ctx.body = {
+          message: '插入成功!'
+        }
+      } catch(e) {
+        ctx.body = {
+          message: '插入失败'
+        }
       }
     }
-    
   }
 }
 

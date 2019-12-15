@@ -5,12 +5,14 @@ const staticCache = require('koa-static-cache')
 const favicon = require('koa-favicon')
 const middlewares = require('./middlewares/index')
 const routerConfig = require('./router-config')
+const bodyParser = require('koa-bodyparser')
 
 const app = module.exports = new Koa()
 
 app.use(serve('/dist', './dist'))
    .use(favicon(path.join(__dirname, '/public/images/logo.png')))
    .use(middlewares.util)
+   .use(bodyParser())
    .use(routerConfig.api.routes())
    .use(routerConfig.api.allowedMethods())
 

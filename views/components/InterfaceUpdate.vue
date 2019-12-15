@@ -129,12 +129,17 @@ export default {
             }
           } catch (err) {
             if (!/^http(s)?:\/\//.test(this.temp.rule)) {
-              this.$Message.error(error.message || '请检查数据定义是否符合要求。')
+              this.$message.error(error.message || '请检查数据定义是否符合要求。')
               return
             }
           }
-          const res = await Api.create({data: {...this.temp, url:mockUrl}})
-          console.log(res)
+          try {
+            await Api.create({data: {...this.temp, url:mockUrl}})
+            this.$message.success('新增成功!')
+            this.$router.push('/')
+          } catch(e) {
+            this.$message.error(e)
+          }     
         }
       })
     },

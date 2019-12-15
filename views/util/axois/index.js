@@ -17,11 +17,11 @@ instance.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
-  if (response.status === 200) {
+  if (response.data.code === 200) {
     response = response.data
     return response;
   } else {
-    return Promise.reject(error);
+    return Promise.reject(response.data.message);
   }
   // 对响应数据做点什么
   
