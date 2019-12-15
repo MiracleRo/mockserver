@@ -45,7 +45,7 @@ const api = db.define('t_user'/*自定义表名*/, {
     //普通索引,默认BTREE
       {
           unique: true,
-          fields: ['id']
+          fields: ['id', 'url']
       },
    ]
 });
