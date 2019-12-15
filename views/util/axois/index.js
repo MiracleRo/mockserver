@@ -42,7 +42,8 @@ const createAPI = (url, method, config) => {
 const Api = {
   list: config => createAPI('/list', 'get', config),
   create: config => createAPI('/create', 'post', config),
-  detail: config => createAPI('/detail', 'get', config)
+  detail: config => createAPI('/detail', 'get', config),
+  update: config => createAPI('/update', 'post', config)
 }
 
 export {

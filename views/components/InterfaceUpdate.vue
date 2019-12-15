@@ -93,10 +93,6 @@ export default {
         this.submit()
       }
     })
-    this.$nextTick(() => {
-      this.codeEditor.setValue(this.temp.rule)
-      this.format()
-    })
   },
   methods: {
     convertUrl (url) {
@@ -128,8 +124,11 @@ export default {
             }
           }
           try {
+            this.edit ? 
+            await Api.update({data: {...this.temp, url:mockUrl, id: this.$route.params.id}}) : 
             await Api.create({data: {...this.temp, url:mockUrl}})
-            this.$message.success('新增成功!')
+            const message =  this.edit ? '更新成功!' : '新增成功'
+            this.$message.success(`${message}`)
             this.$router.push('/')
           } catch(e) {
             this.$message.error(e)
@@ -154,10 +153,15 @@ export default {
       try {
         const data = await Api.detail({params: {id: this.$route.params.id}})
         const {url, description, method, rule} = data.data.detail
-        this.temp.url = url;
+        console.log(rule)
+        this.temp.url = url.slice(1);
         this.temp.description = description;
         this.temp.rule = rule;
         this.temp.method = method;
+        this.$nextTick(() => {
+          this.codeEditor.setValue(this.temp.rule)
+          this.format()
+        })
       } catch (e) {
         this.$message.error(e)
       }

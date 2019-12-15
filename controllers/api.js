@@ -63,7 +63,7 @@ class Api {
       try {
         let {id} = ctx.query
         const res = await ApiModel.findOne({
-          where:{id: parseInt(id)}
+          where: {id: parseInt(id)}
         })
         ctx.body = ctx.util.resuccess({
           detail: res
@@ -78,6 +78,32 @@ class Api {
       ctx.body = ctx.util.refail({
         message: e
       })
+    }
+  }
+  async update(ctx){
+    if (ctx.method.toUpperCase() === 'POST') {
+      const {url, description, rule, method, id} = ctx.request.body
+      const res = await ApiModel.findOne({
+        where: {url}
+      })
+      if (res.id !== parseInt(id)) {
+        ctx.body = ctx.util.refail('请检查接口是否已经存在')
+        return
+      }
+      try {
+        await ApiModel.update({
+          url,
+          description,
+          rule,
+          method
+        },
+        {
+          where:{id: parseInt(id)}
+        })
+        ctx.body =ctx.util.resuccess()
+      } catch(e) {
+        ctx.body =ctx.util.refail(e)
+      }
     }
   }
 }
