@@ -67,6 +67,8 @@ export default {
 </script>
 <style lang="less">
 .list-view {
+  width: 70%;
+  margin: 100px auto 0;
   .button-wrapper {
     display: flex;
      justify-content: flex-end;

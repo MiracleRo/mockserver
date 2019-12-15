@@ -23,8 +23,7 @@ export default {
 <style lang="less">
 #app {
   .view {
-    width: 70%;
-    margin: 100px auto 0;
+    width: 100%;
   }
 }
 </style>
