@@ -20,12 +20,12 @@ const api = db.define('t_user'/*自定义表名*/, {
       allowNull: false, //不允许为null
   },
   //生成规则
-  rules: {
+  rule: {
     type: Sequelize.STRING,
       allowNull: false, //不允许为null
   },
   // 描述状态
-  desc: {
+  description: {
       type: Sequelize.STRING
   },
   create_time: {

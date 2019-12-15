@@ -1,4 +1,3 @@
-const Mock = require('mockjs')
 const ApiModel = require("../models/api")
 class Api {
   async list(ctx) {
@@ -17,8 +16,8 @@ class Api {
           id: item.id,
           url: item.url,
           method: item.method,
-          desc: item.desc,
-          rules: JSON.parse(item.rules)
+          description: item.description,
+          rule: JSON.parse(item.rule)
         }))
         ctx.body = {
           total: count,
@@ -29,6 +28,14 @@ class Api {
       }
     } else {
       ctx.throw(405,'msg')
+    }
+  }
+  async create(ctx) {
+    if (ctx.method.toUpperCase() === 'GET') {
+      const {url, desc, rule, method} = ctx.query
+      ctx.body = {
+        data: "wdnmd"
+      }
     }
     
   }

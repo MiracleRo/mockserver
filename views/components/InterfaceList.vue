@@ -8,7 +8,7 @@
       <el-table v-loading="loading" :data="apiList" style="width: 100%">
         <el-table-column prop="url" label="请求路径"></el-table-column>
         <el-table-column prop="method" label="请求方法"></el-table-column>
-        <el-table-column prop="desc" label="描述"></el-table-column>
+        <el-table-column prop="description" label="描述"></el-table-column>
         <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="goToUpdate(scope.row)">查看</el-button>

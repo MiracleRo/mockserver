@@ -32,6 +32,7 @@
 </template>
 <script type="text/javascript">
 import jsBeautify from 'js-beautify/js/lib/beautify'
+import {Api} from '../util/axois/index'
 
 if (typeof window !== 'undefined') {
   ace = require('brace')
@@ -115,7 +116,7 @@ export default {
         this.$message.error('接口数据不能为空!');
         return
       }
-      this.$refs['form'].validate((valid) => {
+      this.$refs['form'].validate(async (valid) => {
         if (valid) {
           const mockUrl = this.convertUrl(this.temp.url)
           try {
@@ -132,7 +133,8 @@ export default {
               return
             }
           }
-          console.log(this.temp)
+          const res = await Api.create({data: {...this.temp, url:mockUrl}})
+          console.log(res)
         }
       })
     },
