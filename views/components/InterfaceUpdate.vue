@@ -4,26 +4,27 @@
       <div ref="codeEditor"></div>
     </div>
     <div class="form-wrapper">
-      <el-form ref="form" :model="temp" label-width="80px" class="form">
-        <el-form-item label="METHOD:">
-          <el-select v-model="temp.methods" class="form-item" size="small">
-            <el-option v-for="item in methods" :key="item.value" :label="item.label" :value="item.value">
+      <el-form ref="form" :model="temp" :rules="rules" label-width="80px" class="form">
+        <el-form-item label="METHOD:" prop="method">
+          <el-select v-model="temp.method" class="form-item" size="small">
+            <el-option v-for="item in method" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select> 
         </el-form-item>
-        <el-form-item label="URL:">
+        <el-form-item label="URL:" prop="url">
           <el-input v-model="temp.url" class="form-item" size="small">
             <template slot="prepend">/</template>
           </el-input>
         </el-form-item>
-        <el-form-item label="描述:">
+        <el-form-item label="描述:" prop="description">
           <el-input v-model="temp.description" class="form-item" size="small"></el-input>
         </el-form-item>
         <div class="create-button">
           <el-button type="primary" @click="submit">创建</el-button>
         </div>
         <el-button-group>
-          <el-button type="primary" icon="el-icon-s-order">格式化</el-button><el-button type="primary" icon="el-icon-circle-close">关闭</el-button>
+          <el-button type="primary" icon="el-icon-s-order" @click="format">格式化</el-button>
+          <el-button type="primary" icon="el-icon-circle-close" @click="close">关闭</el-button>
         </el-button-group>
       </el-form>
     </div>
@@ -44,7 +45,18 @@ export default {
   data () {
     return {
       codeEditor: null,
-      methods: [
+      rules: {
+        method: [
+            { required: true, message: '请选择METHOD', trigger: 'blur' }
+        ],
+        url: [
+            { required: true, message: '请输入URL', trigger: 'blur' }
+        ],
+        description: [
+            { required: true, message: '请输入描述', trigger: 'blur' }
+        ]
+      },
+      method: [
         { label: 'get', value: 'get' },
         { label: 'post', value: 'post' },
         { label: 'put', value: 'put' },
@@ -53,7 +65,7 @@ export default {
       ],
       temp: {
         url: '',
-        mode: '{"data": {}}',
+        rule: '{"data": {}}',
         method: 'get',
         description: ''
       }
@@ -81,29 +93,61 @@ export default {
     if (this.isEdit) {
       this.autoClose = true
       this.temp.url = this.mockData.url.slice(1) // remove /
-      this.temp.mode = this.mockData.mode
+      this.temp.rule = this.mockData.rule
       this.temp.method = this.mockData.method
       this.temp.description = this.mockData.description
     }
 
     this.$nextTick(() => {
-      this.codeEditor.setValue(this.temp.mode)
+      this.codeEditor.setValue(this.temp.rule)
       this.format()
     })
   },
   methods: {
-    submit() {
-      console.log(111111111)
+    convertUrl (url) {
+      const newUrl = '/' + url
+      return newUrl === '/'
+        ? '/'
+        : newUrl.replace(/\/\//g, '/').replace(/\/$/, '')
     },
-     format () {
+    submit() {
+      if (!this.temp.rule) {
+        this.$message.error('接口数据不能为空!');
+        return
+      }
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          const mockUrl = this.convertUrl(this.temp.url)
+          try {
+            const value = (new Function(`return ${this.temp.rule}`))() // eslint-disable-line
+            if (!value) {
+              this.$message.error('接口数据不能为空。')
+              return
+            } else if (typeof value !== 'object') {
+              throw new Error()
+            }
+          } catch (err) {
+            if (!/^http(s)?:\/\//.test(this.temp.rule)) {
+              this.$Message.error(error.message || '请检查数据定义是否符合要求。')
+              return
+            }
+          }
+          console.log(this.temp)
+        }
+      })
+    },
+    format () {
       const context = this.codeEditor.getValue()
       let code = /^http(s)?/.test(context)
         ? context
         : jsBeautify.js_beautify(context, { indent_size: 2 })
       this.codeEditor.setValue(code)
     },
+    close () {
+      this.$router.go(-1)
+    },
     onChange () {
-      this.temp.mode = this.codeEditor.getValue()
+      this.temp.rule = this.codeEditor.getValue()
     }
   }
 }
