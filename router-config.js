@@ -9,4 +9,5 @@ const apiRouter = new Router({ prefix: '/api' })
 exports.api = apiRouter
   .get('/list', api.list)
   .post('/create', api.create)
+  .get('/detail', api.detail)
 

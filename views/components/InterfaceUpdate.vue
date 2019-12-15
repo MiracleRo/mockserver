@@ -20,7 +20,7 @@
           <el-input v-model="temp.description" class="form-item" size="small"></el-input>
         </el-form-item>
         <div class="create-button">
-          <el-button type="primary" @click="submit">创建</el-button>
+          <el-button type="primary" @click="submit">{{ edit ? '更新' : '创建' }}</el-button>
         </div>
         <el-button-group>
           <el-button type="primary" icon="el-icon-s-order" @click="format">格式化</el-button>
@@ -45,6 +45,7 @@ if (typeof window !== 'undefined') {
 export default {
   data () {
     return {
+      edit: false,
       codeEditor: null,
       rules: {
         method: [
@@ -73,7 +74,8 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$route.params.id)
+    this.edit = !!this.$route.params.id
+    this.$route.params.id && this.getDetail()
     this.codeEditor = ace.edit(this.$refs.codeEditor)
     this.codeEditor.getSession().setMode('ace/mode/javascript')
     this.codeEditor.setTheme('ace/theme/monokai')
@@ -91,13 +93,6 @@ export default {
         this.submit()
       }
     })
-    if (this.isEdit) {
-      this.autoClose = true
-      this.temp.url = this.mockData.url.slice(1) // remove /
-      this.temp.rule = this.mockData.rule
-      this.temp.method = this.mockData.method
-      this.temp.description = this.mockData.description
-    }
     this.$nextTick(() => {
       this.codeEditor.setValue(this.temp.rule)
       this.format()
@@ -154,6 +149,18 @@ export default {
     },
     onChange () {
       this.temp.rule = this.codeEditor.getValue()
+    },
+    async getDetail () {
+      try {
+        const data = await Api.detail({params: {id: this.$route.params.id}})
+        const {url, description, method, rule} = data.data.detail
+        this.temp.url = url;
+        this.temp.description = description;
+        this.temp.rule = rule;
+        this.temp.method = method;
+      } catch (e) {
+        this.$message.error(e)
+      }
     }
   }
 }

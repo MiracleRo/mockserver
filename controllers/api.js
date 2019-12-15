@@ -47,15 +47,37 @@ class Api {
         await ApiModel.create({
           url,
           description,
-          rule,
+          rule: rule,
           method
         })
-        ctx.body = ctx.util.success()
+        ctx.body = ctx.util.resuccess()
       } catch(e) {
         ctx.body = {
-          message: '插入失败'
+          message: e
         }
       }
+    }
+  }
+  async detail(ctx) {
+    if (ctx.method.toUpperCase() === 'GET') {
+      try {
+        let {id} = ctx.query
+        const res = await ApiModel.findOne({
+          where:{id: parseInt(id)}
+        })
+        ctx.body = ctx.util.resuccess({
+          detail: res
+        })
+      } catch (e) {
+        ctx.body = ctx.util.refail({
+          message: e
+        })
+        throw new Error(e)
+      }
+    }else{
+      ctx.body = ctx.util.refail({
+        message: e
+      })
     }
   }
 }
