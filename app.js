@@ -6,7 +6,9 @@ const favicon = require('koa-favicon')
 const middlewares = require('./middlewares/index')
 const routerConfig = require('./router-config')
 const bodyParser = require('koa-bodyparser')
+// import restc
 
+// use restc middleware
 const app = module.exports = new Koa()
 
 app.use(serve('/dist', './dist'))

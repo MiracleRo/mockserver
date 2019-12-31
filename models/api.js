@@ -21,7 +21,7 @@ const api = db.define('t_user'/*自定义表名*/, {
   },
   //生成规则
   rule: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
       allowNull: false, //不允许为null
   },
   // 描述状态

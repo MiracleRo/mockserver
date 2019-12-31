@@ -9,9 +9,10 @@
         <el-table-column prop="url" label="请求路径"></el-table-column>
         <el-table-column prop="method" label="请求方法"></el-table-column>
         <el-table-column prop="description" label="描述"></el-table-column>
-        <el-table-column label="操作" width="100">
+        <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="goToUpdate(scope.row)">查看</el-button>
+            <el-button type="text" size="small" @click="goToPreview(scope.row)">查看</el-button>
+            <el-button type="text" size="small" @click="goToUpdate(scope.row)">编辑</el-button>
             <el-button type="text" size="small" @click="deleteApi(scope.row)">删除</el-button>
           </template>
         </el-table-column>  
@@ -58,6 +59,10 @@ export default {
     },
     goToUpdate(payload) {
       payload.id ? this.$router.push(`update/${payload.id}`) : this.$router.push(`create`)
+    },
+    goToPreview(payload) {
+      const baseUrl = window.location.host
+      window.open(baseUrl + '/mock' + payload.url + '#!method=' + payload.method)
     },
     async deleteApi (payload) {
       const {id} = payload

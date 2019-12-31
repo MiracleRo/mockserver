@@ -1,10 +1,15 @@
 const Router = require('koa-router')
+const restc = require('restc').koa2()
 const {
-  api
+  api,
+  mock
 } = require('./controllers')
-// const middleware = require('./middlewares')
 
 const apiRouter = new Router({ prefix: '/api' })
+const mockRouter = new Router({ prefix: '/mock' })
+
+exports.mock = mockRouter
+  .all('*', restc)
 
 exports.api = apiRouter
   .get('/list', api.list)

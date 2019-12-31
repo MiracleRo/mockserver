@@ -17,7 +17,7 @@ class Api {
           url: item.url,
           method: item.method,
           description: item.description,
-          rule: item.rule.replace(/\s/g, '')
+          rule: item.rule
         }))
         ctx.body = ctx.util.resuccess({
           total: count,
@@ -47,7 +47,7 @@ class Api {
         await ApiModel.create({
           url,
           description,
-          rule: rule,
+          rule,
           method
         })
         ctx.body = ctx.util.resuccess()
@@ -94,7 +94,7 @@ class Api {
         await ApiModel.update({
           url,
           description,
-          rule: rule.replace(/\s/g, ''),
+          rule,
           method
         },
         {
