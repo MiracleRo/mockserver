@@ -9,7 +9,7 @@ const apiRouter = new Router({ prefix: '/api' })
 const mockRouter = new Router({ prefix: '/mock' })
 
 exports.mock = mockRouter
-  .all('*', restc)
+  .all('*', restc, mock.getMockAPI)
 
 exports.api = apiRouter
   .get('/list', api.list)

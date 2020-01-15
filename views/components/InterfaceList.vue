@@ -61,8 +61,9 @@ export default {
       payload.id ? this.$router.push(`update/${payload.id}`) : this.$router.push(`create`)
     },
     goToPreview(payload) {
-      const baseUrl = window.location.host
-      window.open(baseUrl + '/mock' + payload.url + '#!method=' + payload.method)
+      const baseUrl = window.location.host;
+      
+      window.open(baseUrl + payload.url + '#!method=' + payload.method)
     },
     async deleteApi (payload) {
       const {id} = payload

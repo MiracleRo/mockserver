@@ -35,7 +35,7 @@ class Api {
       const {url, description, rule, method} = ctx.request.body
       const data = await ApiModel.findOne({
         where: {
-          url,
+          url: '/mock' + url,
           method
         }
       })
@@ -45,7 +45,7 @@ class Api {
       }
       try {
         await ApiModel.create({
-          url,
+          url: '/mock' + url,
           description,
           rule,
           method
