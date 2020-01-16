@@ -3,12 +3,10 @@ const path = require('path')
 const chalk = require('chalk')
 const staticCache = require('koa-static-cache')
 const favicon = require('koa-favicon')
+const cors = require('@koa/cors')
 const middlewares = require('./middlewares/index')
 const routerConfig = require('./router-config')
 const bodyParser = require('koa-bodyparser')
-// import restc
-
-// use restc middleware
 const app = module.exports = new Koa()
 
 app.use(serve('/dist', './dist'))
@@ -19,7 +17,6 @@ app.use(serve('/dist', './dist'))
    .use(routerConfig.mock.allowedMethods())
    .use(routerConfig.api.routes())
    .use(routerConfig.api.allowedMethods())
-
 
 if (!module.parent) {
   app.use(require('./middlewares/view').render(app))

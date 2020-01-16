@@ -61,8 +61,9 @@ export default {
       payload.id ? this.$router.push(`update/${payload.id}`) : this.$router.push(`create`)
     },
     goToPreview(payload) {
-      const baseUrl = window.location.host;
-      
+      const baseUrl = window.location.origin;
+      // console.log(baseUrl + payload.url + '#!method=' + payload.method)
+      // window.location.href = (baseUrl + payload.url + '#!method=' + payload.method)
       window.open(baseUrl + payload.url + '#!method=' + payload.method)
     },
     async deleteApi (payload) {

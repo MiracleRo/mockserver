@@ -17,4 +17,3 @@ exports.api = apiRouter
   .get('/detail', api.detail)
   .post('/update', api.update)
   .post('/delete', api.deleteApi)
-
