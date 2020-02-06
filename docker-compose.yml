@@ -1,0 +1,23 @@
+version: '2.1'
+
+services:
+  mock-server:
+    depends_on:
+      - db
+    image: mock-server
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 9999:9999
+  
+  db:
+    image: mysql:8.0
+    command:
+      - --default_authentication_plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: qwerty!@#
+      MYSQL_DATABASE: mock_api

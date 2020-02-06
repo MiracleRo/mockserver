@@ -1,0 +1,12 @@
+version: '2.1'
+
+services:
+  mock-server:
+    image: mock-server
+    build: .
+    environment:
+      NODE_ENV: development
+    ports:
+      - 9999:9999
+      - 9229:9229
+    command: node --inspect=0.0.0.0:9229 index.js
