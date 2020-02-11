@@ -6,11 +6,10 @@ services:
       - db
     image: mock-server
     build: .
-    environment:
-      NODE_ENV: production
     ports:
       - 9999:9999
-  
+    networks:
+      - app-network
   db:
     image: mysql:8.0
     command:
@@ -21,3 +20,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: qwerty!@#
       MYSQL_DATABASE: mock_api
+      MYSQL_USER: miraclero
+      MYSQL_PASSWORD: miraclero
+    ports:
+      - 22:3306
+    networks:
+      - app-network
+networks:
+  app-network:
